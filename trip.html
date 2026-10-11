@@ -1,0 +1,941 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roamly | Explore the World</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #f5f8fc;
+      color: #243047;
+    }
+
+    header {
+      background: #ffffff;
+      padding: 18px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      box-shadow: 0 2px 12px #00000010;
+    }
+
+    .logo {
+      color: #087f8c;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #243047;
+      margin-left: 22px;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      color: #087f8c;
+    }
+
+    .hero {
+      min-height: 520px;
+      padding: 90px 7%;
+      display: flex;
+      align-items: center;
+      color: white;
+      background:
+        linear-gradient(90deg, #071d35d9, #071d3533),
+        url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1800&q=85")
+        center/cover no-repeat;
+    }
+
+    .hero-content {
+      max-width: 650px;
+    }
+
+    .hero h1 {
+      font-size: clamp(38px, 6vw, 64px);
+      margin-bottom: 20px;
+      line-height: 1.1;
+    }
+
+    .hero p {
+      font-size: 18px;
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 13px 22px;
+      border: none;
+      border-radius: 8px;
+      background: #08a6a6;
+      color: white;
+      font-weight: bold;
+      font-size: 15px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: 0.2s;
+    }
+
+    .btn:hover {
+      background: #087f8c;
+      transform: translateY(-2px);
+    }
+
+    .section {
+      padding: 65px 7%;
+    }
+
+    .section-heading {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .section-heading h2 {
+      font-size: 34px;
+      margin-bottom: 12px;
+    }
+
+    .section-heading p {
+      color: #64748b;
+      line-height: 1.6;
+    }
+
+    .destination-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 25px;
+    }
+
+    .destination-card {
+      background: white;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 5px 22px #0000000d;
+      transition: 0.25s;
+    }
+
+    .destination-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 28px #00000018;
+    }
+
+    .destination-card img {
+      width: 100%;
+      height: 210px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-content {
+      padding: 20px;
+    }
+
+    .card-content h3 {
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    .card-content p {
+      color: #64748b;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    .price {
+      color: #087f8c;
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .booking-section {
+      background: #eaf5f7;
+    }
+
+    .booking-container {
+      max-width: 750px;
+      margin: auto;
+      padding: 32px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 5px 25px #0000000d;
+    }
+
+    .booking-container h2 {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 30px;
+    }
+
+    .booking-intro {
+      text-align: center;
+      color: #64748b;
+      margin-bottom: 28px;
+      line-height: 1.6;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .full-width {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 15px;
+      background: white;
+      color: #243047;
+    }
+
+    input:focus, select:focus {
+      outline: 2px solid #08a6a655;
+      border-color: #08a6a6;
+    }
+
+    .booking-container .btn {
+      width: 100%;
+      margin-top: 24px;
+    }
+
+    .ticket-section {
+      display: none;
+      padding: 55px 7%;
+      background: #f5f8fc;
+    }
+
+    .ticket-section.show {
+      display: block;
+    }
+
+    .ticket {
+      max-width: 700px;
+      margin: auto;
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 30px #00000012;
+      border: 1px solid #dbe5ec;
+    }
+
+    .ticket-header {
+      background: #087f8c;
+      color: white;
+      padding: 25px;
+      text-align: center;
+    }
+
+    .ticket-header h2 {
+      margin-bottom: 8px;
+      font-size: 28px;
+    }
+
+    .ticket-body {
+      padding: 28px;
+    }
+
+    .confirmation {
+      text-align: center;
+      color: #087f55;
+      background: #e7f8ef;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin-bottom: 24px;
+    }
+
+    .ticket-details {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .detail-label {
+      color: #64748b;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    .detail-value {
+      font-weight: bold;
+      overflow-wrap: anywhere;
+    }
+
+    .ticket-total {
+      margin-top: 25px;
+      padding-top: 20px;
+      border-top: 1px dashed #cbd5e1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      font-weight: bold;
+    }
+
+    .ticket-total strong {
+      color: #087f8c;
+      font-size: 24px;
+    }
+
+    .ticket-note {
+      margin-top: 20px;
+      color: #64748b;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .share-area {
+      max-width: 700px;
+      margin: 22px auto 0;
+      text-align: center;
+    }
+
+    .share-area h3 {
+      margin-bottom: 15px;
+    }
+
+    .share-buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .share-btn {
+      padding: 11px 16px;
+      border: none;
+      border-radius: 7px;
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .whatsapp { background: #25a85a; }
+    .telegram { background: #168ac4; }
+    .facebook { background: #1877f2; }
+    .email { background: #596579; }
+    .copy { background: #087f8c; }
+    .download { background: #7c3aed; }
+
+    .share-btn:hover {
+      opacity: 0.86;
+    }
+
+    footer {
+      text-align: center;
+      background: #102b40;
+      color: white;
+      padding: 28px 7%;
+      line-height: 1.8;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        justify-content: center;
+      }
+
+      nav {
+        text-align: center;
+      }
+
+      nav a {
+        display: inline-block;
+        margin: 5px 8px;
+      }
+
+      .hero {
+        padding-top: 65px;
+        padding-bottom: 65px;
+      }
+
+      .form-grid,
+      .ticket-details {
+        grid-template-columns: 1fr;
+      }
+
+      .booking-container {
+        padding: 22px;
+      }
+
+      .ticket-body {
+        padding: 20px;
+      }
+
+      .ticket-total {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+
+      #ticket, #ticket * {
+        visibility: visible;
+      }
+
+      #ticket {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        box-shadow: none;
+      }
+
+      .share-area, footer, header, .hero, .section,
+      .booking-section, .ticket-note {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">✈ Roamly</div>
+
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#destinations">Destinations</a>
+      <a href="#booking">Book a Trip</a>
+      <a href="#ticket-section">My Ticket</a>
+    </nav>
+  </header>
+
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h1>Discover the World, One Journey at a Time</h1>
+      <p>
+        Explore beautiful destinations, plan your next adventure,
+        and create unforgettable memories with Roamly.
+      </p>
+      <a href="#destinations" class="btn">Explore Destinations</a>
+      <a href="#booking" class="btn">Book Your Trip</a>
+    </div>
+  </section>
+
+  <section class="section" id="destinations">
+    <div class="section-heading">
+      <h2>Popular Destinations</h2>
+      <p>Choose your next destination and begin your adventure.</p>
+    </div>
+
+    <div class="destination-grid">
+
+      <article class="destination-card">
+        <img
+          src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=900&q=80"
+          alt="Beautiful beach in Goa"
+        >
+        <div class="card-content">
+          <h3>Goa</h3>
+          <p>Relax on sunny beaches, enjoy coastal views, and discover Portuguese heritage.</p>
+          <div class="price">From ₹4,999 / person</div>
+          <button class="btn" onclick="selectDestination('Goa')">Book Goa</button>
+        </div>
+      </article>
+
+      <article class="destination-card">
+        <img
+          src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=900&q=80"
+          alt="Snow-covered mountains in Manali"
+        >
+        <div class="card-content">
+          <h3>Manali</h3>
+          <p>Experience mountain scenery, peaceful valleys, and refreshing Himalayan air.</p>
+          <div class="price">From ₹5,999 / person</div>
+          <button class="btn" onclick="selectDestination('Manali')">Book Manali</button>
+        </div>
+      </article>
+
+      <article class="destination-card">
+        <img
+          src="https://images.unsplash.com/photo-1599661046827-dacff0c0f09a?auto=format&fit=crop&w=900&q=80"
+          alt="Historic architecture in Jaipur"
+        >
+        <div class="card-content">
+          <h3>Jaipur</h3>
+          <p>Discover magnificent forts, royal palaces, colourful markets, and local cuisine.</p>
+          <div class="price">From ₹3,999 / person</div>
+          <button class="btn" onclick="selectDestination('Jaipur')">Book Jaipur</button>
+        </div>
+      </article>
+
+      <article class="destination-card">
+        <img
+          src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=900&q=80"
+          alt="Green landscape in Kerala"
+        >
+        <div class="card-content">
+          <h3>Kerala</h3>
+          <p>Explore lush greenery, serene backwaters, tea gardens, and tropical landscapes.</p>
+          <div class="price">From ₹6,999 / person</div>
+          <button class="btn" onclick="selectDestination('Kerala')">Book Kerala</button>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="section booking-section" id="booking">
+    <div class="booking-container">
+      <h2>Plan Your Journey</h2>
+      <p class="booking-intro">
+        Enter your details to generate your trip confirmation ticket.
+      </p>
+
+      <form id="bookingForm">
+        <div class="form-grid">
+
+          <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input
+              type="text"
+              id="fullName"
+              placeholder="Enter your full name"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="emailAddress">Email Address</label>
+            <input
+              type="email"
+              id="emailAddress"
+              placeholder="Enter your email"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="destination">Destination</label>
+            <select id="destination" required>
+              <option value="">Choose a destination</option>
+              <option value="Goa">Goa</option>
+              <option value="Manali">Manali</option>
+              <option value="Jaipur">Jaipur</option>
+              <option value="Kerala">Kerala</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="travelDate">Travel Date</label>
+            <input type="date" id="travelDate" required>
+          </div>
+
+          <div class="form-group">
+            <label for="travelers">Number of Travelers</label>
+            <input
+              type="number"
+              id="travelers"
+              min="1"
+              step="1"
+              value="1"
+              placeholder="Enter number of travelers"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="travelClass">Travel Package</label>
+            <select id="travelClass" required>
+              <option value="Standard">Standard</option>
+              <option value="Premium">Premium (+ ₹2,000 per person)</option>
+              <option value="Luxury">Luxury (+ ₹5,000 per person)</option>
+            </select>
+          </div>
+
+          <div class="form-group full-width">
+            <label for="departure">Departure City</label>
+            <input
+              type="text"
+              id="departure"
+              placeholder="Enter your departure city"
+              required
+            >
+          </div>
+
+        </div>
+
+        <button type="submit" class="btn">Confirm Booking</button>
+      </form>
+    </div>
+  </section>
+
+  <section class="ticket-section" id="ticket-section">
+    <div class="ticket" id="ticket">
+
+      <div class="ticket-header">
+        <h2>✈ Roamly Travel Ticket</h2>
+        <p>Your journey begins here!</p>
+      </div>
+
+      <div class="ticket-body">
+        <div class="confirmation">
+          ✓ Booking Confirmation Generated
+        </div>
+
+        <div class="ticket-details">
+          <div>
+            <div class="detail-label">Passenger / Lead Traveler</div>
+            <div class="detail-value" id="ticketName">—</div>
+          </div>
+
+          <div>
+            <div class="detail-label">Booking Reference</div>
+            <div class="detail-value" id="ticketReference">—</div>
+          </div>
+
+          <div>
+            <div class="detail-label">Destination</div>
+            <div class="detail-value" id="ticketDestination">—</div>
+          </div>
+
+          <div>
+            <div class="detail-label">Travel Date</div>
+            <div class="detail-value" id="ticketDate">—</div>
+          </div>
+
+          <div>
+            <div class="detail-label">Number of Travelers</div>
+            <div class="detail-value" id="ticketTravelers">—</div>
+          </div>
+
+          <div>
+            <div class="detail-label">Travel Package</div>
+            <div class="detail-value" id="ticketClass">—</div>
+          </div>
+
+          <div>
+            <div class="detail-label">Departure City</div>
+            <div class="detail-value" id="ticketDeparture">—</div>
+          </div>
+
+          <div>
+            <div class="detail-label">Contact Email</div>
+            <div class="detail-value" id="ticketEmail">—</div>
+          </div>
+        </div>
+
+        <div class="ticket-total">
+          <span>Estimated Total Package Cost</span>
+          <strong id="ticketTotal">—</strong>
+        </div>
+
+        <p class="ticket-note">
+          This is a sample booking confirmation generated by the Roamly demo
+          website. It is not a real transport ticket or proof of payment.
+          Prices are illustrative and subject to actual provider availability.
+        </p>
+      </div>
+    </div>
+
+    <div class="share-area">
+      <h3>Share or Save Your Ticket</h3>
+
+      <div class="share-buttons">
+        <button class="share-btn whatsapp" onclick="shareTicket('whatsapp')">
+          WhatsApp
+        </button>
+
+        <button class="share-btn telegram" onclick="shareTicket('telegram')">
+          Telegram
+        </button>
+
+        <button class="share-btn facebook" onclick="shareTicket('facebook')">
+          Facebook
+        </button>
+
+        <button class="share-btn email" onclick="shareTicket('email')">
+          Email
+        </button>
+
+        <button class="share-btn copy" onclick="copyTicket()">
+          Copy Details
+        </button>
+
+        <button class="share-btn download" onclick="downloadTicket()">
+          Download Ticket
+        </button>
+
+        <button class="share-btn" style="background:#344054"
+          onclick="printTicket()">
+          Print Ticket
+        </button>
+
+        <button class="share-btn" style="background:#0f766e"
+          onclick="shareTicket('native')">
+          More Options
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <h3>✈ Roamly</h3>
+    <p>Your next adventure is just a booking away.</p>
+    <p>© 2026 Roamly Travel Website | Educational Demo Project</p>
+  </footer>
+
+  <script>
+    const prices = {
+      Goa: 4999,
+      Manali: 5999,
+      Jaipur: 3999,
+      Kerala: 6999
+    };
+
+    const packageExtras = {
+      Standard: 0,
+      Premium: 2000,
+      Luxury: 5000
+    };
+
+    let currentTicketText = "";
+
+    // Prevent selecting a date in the past.
+    const travelDateInput = document.getElementById("travelDate");
+    const today = new Date();
+    const localToday = [
+      today.getFullYear(),
+      String(today.getMonth() + 1).padStart(2, "0"),
+      String(today.getDate()).padStart(2, "0")
+    ].join("-");
+
+    travelDateInput.min = localToday;
+
+    // Fill the booking form when a destination card is selected.
+    function selectDestination(destination) {
+      document.getElementById("destination").value = destination;
+      document.getElementById("booking").scrollIntoView({
+        behavior: "smooth"
+      });
+    }
+
+    function createReference() {
+      return "RM" + Date.now().toString().slice(-8);
+    }
+
+    function formatDate(dateString) {
+      const date = new Date(dateString + "T00:00:00");
+
+      return date.toLocaleDateString("en-IN", {
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+      });
+    }
+
+    function getTicketText() {
+      return [
+        "ROAMLY TRAVEL - BOOKING CONFIRMATION",
+        "------------------------------------",
+        "Passenger: " + document.getElementById("ticketName").textContent,
+        "Booking Reference: " + document.getElementById("ticketReference").textContent,
+        "Destination: " + document.getElementById("ticketDestination").textContent,
+        "Travel Date: " + document.getElementById("ticketDate").textContent,
+        "Number of Travelers: " + document.getElementById("ticketTravelers").textContent,
+        "Package: " + document.getElementById("ticketClass").textContent,
+        "Departure City: " + document.getElementById("ticketDeparture").textContent,
+        "Contact Email: " + document.getElementById("ticketEmail").textContent,
+        "Estimated Total: " + document.getElementById("ticketTotal").textContent,
+        "",
+        "Sample booking confirmation only. Not a real transport ticket or proof of payment."
+      ].join("\n");
+    }
+
+    document.getElementById("bookingForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const name = document.getElementById("fullName").value.trim();
+      const email = document.getElementById("emailAddress").value.trim();
+      const destination = document.getElementById("destination").value;
+      const travelDate = document.getElementById("travelDate").value;
+      const travelers = Number(document.getElementById("travelers").value);
+      const travelClass = document.getElementById("travelClass").value;
+      const departure = document.getElementById("departure").value.trim();
+
+      // No fixed maximum traveler count.
+      if (!Number.isSafeInteger(travelers) || travelers < 1) {
+        alert("Please enter a valid whole number of at least 1 traveler.");
+        return;
+      }
+
+      if (!name || !email || !destination || !travelDate || !departure) {
+        alert("Please fill in all required fields.");
+        return;
+      }
+
+      if (travelDate < localToday) {
+        alert("Please select today or a future travel date.");
+        return;
+      }
+
+      const pricePerPerson =
+        prices[destination] + packageExtras[travelClass];
+
+      const total = pricePerPerson * travelers;
+
+      if (!Number.isSafeInteger(total)) {
+        alert("The total is too large to calculate safely. Please check the traveler count.");
+        return;
+      }
+
+      document.getElementById("ticketName").textContent = name;
+      document.getElementById("ticketReference").textContent = createReference();
+      document.getElementById("ticketDestination").textContent = destination;
+      document.getElementById("ticketDate").textContent = formatDate(travelDate);
+      document.getElementById("ticketTravelers").textContent = travelers;
+      document.getElementById("ticketClass").textContent = travelClass;
+      document.getElementById("ticketDeparture").textContent = departure;
+      document.getElementById("ticketEmail").textContent = email;
+      document.getElementById("ticketTotal").textContent =
+        "₹" + total.toLocaleString("en-IN");
+
+      currentTicketText = getTicketText();
+
+      const ticketSection = document.getElementById("ticket-section");
+      ticketSection.classList.add("show");
+
+      ticketSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    });
+
+    async function copyText(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        alert("Ticket details copied successfully!");
+      } catch (error) {
+        // Fallback for browsers that do not allow clipboard access.
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.select();
+
+        const copied = document.execCommand("copy");
+        textarea.remove();
+
+        if (copied) {
+          alert("Ticket details copied successfully!");
+        } else {
+          alert("Copy was unavailable. Please select and copy the ticket text manually.");
+        }
+      }
+    }
+
+    function copyTicket() {
+      currentTicketText = getTicketText();
+      copyText(currentTicketText);
+    }
+
+    async function shareTicket(platform) {
+      currentTicketText = getTicketText();
+
+      const encodedText = encodeURIComponent(currentTicketText);
+
+      const urls = {
+        whatsapp: "https://wa.me/?text=" + encodedText,
+        telegram: "https://t.me/share/url?url=" +
+          encodeURIComponent("https://example.com") +
+          "&text=" + encodedText,
+        facebook: "https://www.facebook.com/sharer/sharer.php?u=" +
+          encodeURIComponent("https://example.com"),
+        email: "mailto:?subject=" +
+          encodeURIComponent("My Roamly Trip Confirmation") +
+          "&body=" + encodedText
+      };
+
+      if (platform === "native") {
+        if (navigator.share) {
+          try {
+            await navigator.share({
+              title: "Roamly Travel Ticket",
+              text: currentTicketText
+            });
+          } catch (error) {
+            if (error.name !== "AbortError") {
+              alert("Sharing was not available on this device.");
+            }
+          }
+        } else {
+          alert("Your browser does not support the share menu. Choose WhatsApp, Telegram, Email, or Copy Details instead.");
+        }
+
+        return;
+      }
+
+      if (platform === "facebook") {
+        alert("Facebook sharing generally shares a webpage link, not the complete ticket text. Use Copy Details to share your full ticket.");
+      }
+
+      window.open(urls[platform], "_blank", "noopener,noreferrer");
+    }
+
+    function downloadTicket() {
+      currentTicketText = getTicketText();
+
+      const blob = new Blob([currentTicketText], {
+        type: "text/plain;charset=utf-8"
+      });
+
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+
+      link.href = url;
+      link.download = "Roamly-Travel-Ticket.txt";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+SS
+      URL.revokeObjectURL(url);
+    }
+
+    function printTicket() {
+      window.print();
+    }
+  </script>
+
+</body>
+</html>
